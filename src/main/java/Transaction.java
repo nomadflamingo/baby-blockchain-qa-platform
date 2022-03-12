@@ -22,6 +22,9 @@ public final class Transaction {
         validateNotNull(type, "Transaction type cannot be null");
         validateNotNull(from, "Transaction from address cannot be null");
         validateNotNull(to, "Transaction to address cannot be null");
+        if (nonce < 0) throw new IllegalArgumentException("Transaction nonce cannot be negative");
+        if (amount < 0) throw new IllegalArgumentException("Transaction amount cannot be negative");
+        if (commission < 0) throw new IllegalArgumentException("Transaction commission cannot be negative");
 
         this.type = type;
         this.from = from;
