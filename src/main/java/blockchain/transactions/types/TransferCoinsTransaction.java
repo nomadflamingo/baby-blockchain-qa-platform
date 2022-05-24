@@ -68,7 +68,8 @@ public final class TransferCoinsTransaction extends BaseTransaction {
     @Override
     public boolean execute() throws NoSuchAlgorithmException {
         // Get recipient and receiver accounts
-        Account recipient = Blockchain.getAccounts().get(from);
+        Account recipient = Blockchain.getAccounts().get(from);  // Recipient is not null, if transaction is validated
+        Account receiver = Blockchain.getAccounts().get(to);
 
         // Stop executing, if transaction nonce is greater than current recipient account nonce
         if (nonce > recipient.getNonce()) return false;
@@ -82,8 +83,15 @@ public final class TransferCoinsTransaction extends BaseTransaction {
         // Set new recipient account balance
         recipient.updateBalance(recipient.getBalance() - totalSum);
 
+        // If receiver is null, create new receiver account and add it to the blockchain
+        if (receiver == null) {
+            receiver = new UserAccount(to);
+            Blockchain.addAccount(receiver);
+        }
+
+        // Set the new receiver account balance
+        receiver.updateBalance(receiver.getBalance() + amount);
         return true;
-        // TODO: implement next
     }
 
     @Override

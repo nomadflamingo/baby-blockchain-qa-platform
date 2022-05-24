@@ -6,7 +6,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 
 import accounts.Account;
-import accounts.types.UserAccount;
 import blockchain.Blockchain;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hasher;
@@ -108,6 +107,9 @@ public abstract class BaseTransaction implements Serializable {
      *         Checks that public key hash matches transaction from address
      *     </li>
      *     <li>
+     *         Checks that commission is greater than or equal to minimum fees for certain transaction type
+     *     </li>
+     *     <li>
      *         Checks that nonce, amount and commission are not negative
      *     </li>
      *     <li>
@@ -135,10 +137,13 @@ public abstract class BaseTransaction implements Serializable {
             return new ValidationResult(false, "Public key is invalid for this transaction");
         }
 
-        // Check that fields are not
-        if (nonce < 0) return new ValidationResult(false, "Transaction nonce cannot be negative");
-        if (amount < 0) return new ValidationResult(false, "Transaction amount cannot be negative");
-        if (commission < 0) return new ValidationResult(false, "Transaction commission cannot be negative");
+        // Check that integer fields are not negative and that the commission is not less than minimum required fee
+        if (nonce < 0)
+            return new ValidationResult(false, "Transaction nonce cannot be negative");
+        if (amount < 0)
+            return new ValidationResult(false, "Transaction amount cannot be negative");
+        if (commission < minimumFees)  // also checks that commission >= 0, since minimumFees >= 0
+            return new ValidationResult(false, "Transaction commission is less than minimum required fee");
 
         // Use addExact to check for overflow
         int totalSum;
@@ -168,29 +173,6 @@ public abstract class BaseTransaction implements Serializable {
         return new ValidationResult(true, "Transaction is valid");
     }
 
-    /**
-     * Base transaction executor code. Does the following:
-     * <ul>
-     *     <li>
-     *         For new recipient accounts, creates them only if nonce is 0
-     *     </li>
-     *     <li>
-     *         For existing recipient accounts, stops executing them if nonce is greater than their account's nonce
-     *     </li>
-     *     <li>
-     *         Increments the account's nonce by 1
-     *     </li>
-     *     <li>
-     *         Decrements recipient's balance by total transaction sum, which consists of amount + commission
-     *     </li>
-     *     <li>
-     *         If no receiver account found, creates it
-     *     </li>
-     *     <li>
-     *         Increments receiver's balance by total transaction sum
-     *     </li>
-     * </ul>
-     */
     public abstract boolean execute() throws NoSuchAlgorithmException;
 
     protected abstract String hash();
@@ -217,5 +199,4 @@ public abstract class BaseTransaction implements Serializable {
     public void print() {
         System.out.println(this);
     }
-
 }
