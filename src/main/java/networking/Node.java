@@ -6,33 +6,21 @@ import blockchain.transactions.types.TransferCoinsTransaction;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 
 public class Node {
     public static void main(String[] args) throws Exception {
-        final ObjectMapper mapper = new ObjectMapper();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("> Enter port to expose:");
+        String port = bufferedReader.readLine();
 
-        final TransferCoinsTransaction tx = new TransferCoinsTransaction(
-                "lalalala",
-                "lulululu",
-                0,
-                12,
-                2);
+        // Enter port to expose
+        // Enter ports to listen to
 
-        final String json = mapper.writeValueAsString(tx);
 
-        final JsonNode jsonNode = mapper.readTree(json);
+        // Command listener
 
-        final TransactionType type = mapper.convertValue(jsonNode.get("type"), TransactionType.class);
-
-        final Class<? extends BaseTransaction> cls;
-        switch (type) {
-            case TRANSFER_COINS -> {
-                cls = TransferCoinsTransaction.class;
-            }
-            default -> throw new Exception();
-        }
-
-        final BaseTransaction txDeserialized = mapper.readValue(json, cls);
-        System.out.println(txDeserialized);
     }
 }

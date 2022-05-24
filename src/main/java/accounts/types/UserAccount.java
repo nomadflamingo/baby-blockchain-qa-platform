@@ -2,18 +2,17 @@ package accounts.types;
 
 import accounts.Account;
 
-import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 
 public class UserAccount extends Account {
     private int reputation;
 
-    public UserAccount(PublicKey publicKey) throws NoSuchAlgorithmException {
+    public UserAccount(PublicKey publicKey) {
         super(publicKey);
         this.reputation = 0;
     }
 
-    public UserAccount(String address) throws NoSuchAlgorithmException {
+    public UserAccount(String address) {
         super(address);
         this.reputation = 0;
     }
