@@ -17,7 +17,7 @@ public class AnswerAccount extends Account {
             String authorId,
             String body,
             String[] attachments,
-            String questionId) throws NoSuchAlgorithmException
+            String questionId)
     {
         super(address);
 
@@ -25,6 +25,23 @@ public class AnswerAccount extends Account {
         this.attachments = attachments;
         this.body = body;
         this.questionId = questionId;
+        this.reputation = 0;
+    }
+
+    public AnswerAccount(
+            PublicKey publicKey,
+            String authorId,
+            String body,
+            String[] attachments,
+            String questionId)
+    {
+        super(publicKey);
+
+        this.authorId = authorId;
+        this.attachments = attachments;
+        this.body = body;
+        this.questionId = questionId;
+        this.reputation = 0;
     }
 
     public String getBody() {

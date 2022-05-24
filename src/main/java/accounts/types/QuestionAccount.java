@@ -2,7 +2,7 @@ package accounts.types;
 
 import accounts.Account;
 
-import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.util.ArrayList;
 
 public class QuestionAccount extends Account {
@@ -15,14 +15,33 @@ public class QuestionAccount extends Account {
     private final ArrayList<String> answerIds;
 
     public QuestionAccount(
-        String address,
-        String authorId,
-        String title,
-        String body,
-        String[] attachments,
-        long endTime) throws NoSuchAlgorithmException
+            String address,
+            String authorId,
+            String title,
+            String body,
+            String[] attachments,
+            long endTime)
     {
         super(address);
+
+        this.authorId = authorId;
+        this.title = title;
+        this.body = body;
+        this.attachments = attachments;
+        this.endTime = endTime;
+        this.reputation = 0;
+        this.answerIds = new ArrayList<>();
+    }
+
+    public QuestionAccount(
+            PublicKey publicKey,
+            String authorId,
+            String title,
+            String body,
+            String[] attachments,
+            long endTime)
+    {
+        super(publicKey);
 
         this.authorId = authorId;
         this.title = title;

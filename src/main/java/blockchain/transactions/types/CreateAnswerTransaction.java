@@ -20,18 +20,17 @@ public class CreateAnswerTransaction extends BaseTransaction {
 
 
     public CreateAnswerTransaction(
-        @JsonProperty("type") TransactionType type,
-        @JsonProperty("from") String from,
-        @JsonProperty("to") String to,
-        @JsonProperty("nonce") int nonce,
-        @JsonProperty("amount") int amount,
-        @JsonProperty("commission") int commission,
-        @JsonProperty("answerBody") String answerBody,
-        @JsonProperty("attachments") String[] attachments,
-        @JsonProperty("questionId") String questionId,
-        @JsonProperty("id") String id)
+            @JsonProperty("from") String from,
+            @JsonProperty("to") String to,
+            @JsonProperty("nonce") int nonce,
+            @JsonProperty("amount") int amount,
+            @JsonProperty("commission") int commission,
+            @JsonProperty("answerBody") String answerBody,
+            @JsonProperty("attachments") String[] attachments,
+            @JsonProperty("questionId") String questionId,
+            @JsonProperty("id") String id)
     {
-        super(type, from, to, nonce, amount, commission, id);
+        super(TransactionType.CREATE_ANSWER, from, to, nonce, amount, commission, id);
 
         this.answerBody = answerBody;
         this.attachments = attachments;
@@ -39,17 +38,16 @@ public class CreateAnswerTransaction extends BaseTransaction {
     }
 
     public CreateAnswerTransaction(
-        TransactionType type,
-        String from,
-        String to,
-        int nonce,
-        int amount,
-        int commission,
-        String answerBody,
-        String[] attachments,
-        String questionId)
+            String from,
+            String to,
+            int nonce,
+            int amount,
+            int commission,
+            String answerBody,
+            String[] attachments,
+            String questionId)
     {
-        super(type, from, to, nonce, amount, commission);
+        super(TransactionType.CREATE_ANSWER, from, to, nonce, amount, commission);
 
         this.answerBody = answerBody;
         this.attachments = attachments;

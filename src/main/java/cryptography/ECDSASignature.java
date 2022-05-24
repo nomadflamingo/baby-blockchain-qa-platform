@@ -7,6 +7,24 @@ public class ECDSASignature {
     // This class only has static methods, so we don't need to instantiate it
     private ECDSASignature() { }
 
+    /**
+     * Generates key pair using ECDSA
+     * @return Generated KeyPair object
+     */
+    public static KeyPair generateKeyPair() {
+        KeyPair keyPair = null;
+
+        try {
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+
+            keyGen.initialize(256, random);
+            keyPair = keyGen.generateKeyPair();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return keyPair;
+    }
 
     /**
      * Signs String data using ECDSA

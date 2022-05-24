@@ -12,7 +12,7 @@ public abstract class Account {
     private int balance;
 
     /** Account constructor from address. Used to register accounts in blockchain, after first transaction is set */
-    protected Account(String address) throws NoSuchAlgorithmException {
+    protected Account(String address) {
         this.address = address;
 
         // Set account default balance and nonce
@@ -21,7 +21,7 @@ public abstract class Account {
     }
 
     /** Account constructor from address. Used to create  */
-    protected Account(PublicKey publicKey) throws NoSuchAlgorithmException {
+    protected Account(PublicKey publicKey) {
         this.address = getAddressFromPubKey(publicKey);
 
         // Set account default balance and nonce
