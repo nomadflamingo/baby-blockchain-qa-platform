@@ -9,14 +9,22 @@ public class AnswerAccount extends Account {
     private String body;
     private String[] attachments;
     private final String authorId;
+    private final String questionId;
     private int reputation;
 
-    public AnswerAccount(PublicKey publicKey, String authorId, String body, String[] attachments) throws NoSuchAlgorithmException {
-        super(publicKey);
+    public AnswerAccount(
+            String address,
+            String authorId,
+            String body,
+            String[] attachments,
+            String questionId) throws NoSuchAlgorithmException
+    {
+        super(address);
 
         this.authorId = authorId;
         this.attachments = attachments;
         this.body = body;
+        this.questionId = questionId;
     }
 
     public String getBody() {
@@ -45,5 +53,9 @@ public class AnswerAccount extends Account {
 
     public void setReputation(int reputation) {
         this.reputation = reputation;
+    }
+
+    public String getQuestionId() {
+        return questionId;
     }
 }

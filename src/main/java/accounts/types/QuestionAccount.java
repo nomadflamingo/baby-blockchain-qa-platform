@@ -3,7 +3,6 @@ package accounts.types;
 import accounts.Account;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
 import java.util.ArrayList;
 
 public class QuestionAccount extends Account {
@@ -16,13 +15,14 @@ public class QuestionAccount extends Account {
     private final ArrayList<String> answerIds;
 
     public QuestionAccount(
+        String address,
         String authorId,
-        String questionAddress,
-        String title, String body,
+        String title,
+        String body,
         String[] attachments,
         long endTime) throws NoSuchAlgorithmException
     {
-        super(questionAddress);
+        super(address);
 
         this.authorId = authorId;
         this.title = title;

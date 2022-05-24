@@ -17,23 +17,23 @@ public final class TransferCoinsTransaction extends BaseTransaction {
 
     /** Constructor with hash. Used to deserialize transactions received from other nodes */
     public TransferCoinsTransaction(
-            @JsonProperty("from") String from,
-            @JsonProperty("to") String to,
-            @JsonProperty("nonce") int nonce,
-            @JsonProperty("amount") int amount,
-            @JsonProperty("commission") int commission,
-            @JsonProperty("id") String id)
+        @JsonProperty("from") String from,
+        @JsonProperty("to") String to,
+        @JsonProperty("nonce") int nonce,
+        @JsonProperty("amount") int amount,
+        @JsonProperty("commission") int commission,
+        @JsonProperty("id") String id)
     {
         super(TransactionType.TRANSFER_COINS, from, to, nonce, amount, commission, id);
     }
 
     /** Constructor without hash as an argument (used to create transaction internally inside wallet) */
     public TransferCoinsTransaction(
-            String from,
-            String to,
-            int nonce,
-            int amount,
-            int commission)
+        String from,
+        String to,
+        int nonce,
+        int amount,
+        int commission)
     {
         super(TransactionType.TRANSFER_COINS, from, to, nonce, amount, commission);
     }
@@ -49,6 +49,7 @@ public final class TransferCoinsTransaction extends BaseTransaction {
             return new ValidationResult(false, "Transaction hash is not valid");
         }
 
+        // Get recipient and receiver
         Account recipient = Blockchain.getAccounts().get(from);
         Account receiver = Blockchain.getAccounts().get(to);
 
@@ -91,6 +92,7 @@ public final class TransferCoinsTransaction extends BaseTransaction {
 
         // Set the new receiver account balance
         receiver.updateBalance(receiver.getBalance() + amount);
+
         return true;
     }
 
