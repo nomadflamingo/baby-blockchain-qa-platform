@@ -11,18 +11,18 @@ public class QuestionAccount extends Account {
     private String title;
     private String body;
     private String[] attachments;
-    private int endTime;
+    private long endTime;
     private int reputation;
     private final ArrayList<String> answerIds;
 
     public QuestionAccount(
-            String authorId,
-            PublicKey publicKey,
-            String title, String body,
-            String[] attachments,
-            int endTime) throws NoSuchAlgorithmException
+        String authorId,
+        String questionAddress,
+        String title, String body,
+        String[] attachments,
+        long endTime) throws NoSuchAlgorithmException
     {
-        super(publicKey);
+        super(questionAddress);
 
         this.authorId = authorId;
         this.title = title;
@@ -61,7 +61,7 @@ public class QuestionAccount extends Account {
         this.attachments = attachments;
     }
 
-    public int getEndTime() {
+    public long getEndTime() {
         return endTime;
     }
 
