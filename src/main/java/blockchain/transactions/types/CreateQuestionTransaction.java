@@ -26,16 +26,16 @@ public final class CreateQuestionTransaction extends BaseTransaction {
     }
 
     public CreateQuestionTransaction(
-            @JsonProperty("from") String from,
-            @JsonProperty("to") String to,
-            @JsonProperty("nonce") int nonce,
-            @JsonProperty("amount") int amount,
-            @JsonProperty("commission") int commission,
-            @JsonProperty("questionTitle") String questionTitle,
-            @JsonProperty("questionBody") String questionBody,
-            @JsonProperty("attachments") String[] attachments,
-            @JsonProperty("endTime") long endTime,
-            @JsonProperty("id") String id)
+        @JsonProperty("from") String from,
+        @JsonProperty("to") String to,
+        @JsonProperty("nonce") int nonce,
+        @JsonProperty("amount") int amount,
+        @JsonProperty("commission") int commission,
+        @JsonProperty("questionTitle") String questionTitle,
+        @JsonProperty("questionBody") String questionBody,
+        @JsonProperty("attachments") String[] attachments,
+        @JsonProperty("endTime") long endTime,
+        @JsonProperty("id") String id)
     {
         super(TransactionType.CREATE_QUESTION, from, to, nonce, amount, commission, id);
 
@@ -46,15 +46,15 @@ public final class CreateQuestionTransaction extends BaseTransaction {
     }
 
     public CreateQuestionTransaction(
-            String from,
-            String to,
-            int nonce,
-            int amount,
-            int commission,
-            String questionTitle,
-            String questionBody,
-            String[] attachments,
-            long endTime)
+        String from,
+        String to,
+        int nonce,
+        int amount,
+        int commission,
+        String questionTitle,
+        String questionBody,
+        String[] attachments,
+        long endTime)
     {
         super(TransactionType.CREATE_QUESTION, from, to, nonce, amount, commission);
 
@@ -116,8 +116,12 @@ public final class CreateQuestionTransaction extends BaseTransaction {
         // Create question
         Account question = new QuestionAccount(from, to, questionTitle, questionBody, attachments, endTime);
 
+        // Add question to blockchain
+        Blockchain.addAccount(question);
+
         // Set question balance
         question.updateBalance(amount);
+
         return true;
     }
 
